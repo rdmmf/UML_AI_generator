@@ -1,0 +1,49 @@
+@startuml Commande_en_Ligne
+
+' Définition des participants
+actor Utilisateur as U
+boundary Interface as I
+control Systeme_Commande as C
+database Base_Donnees as DB
+entity Service_Paiement as P
+
+title Processus de Commande en Ligne
+
+autonumber
+
+U -> I : Chercher produit (ID: 42)
+activate I
+I -> C : Demande de stock
+activate C
+
+C -> DB : Requête stock(42)
+activate DB
+DB --> C : Résultat (Stock OK)
+deactivate DB
+
+C --> I : Afficher produit
+I --> U : Affichage
+
+note over U, I : L'utilisateur ajoute le produit au panier
+
+U -> I : Valider panier
+I -> C : Créer commande
+
+alt Commande Acceptée
+    C -> P : Requête de paiement(Montant)
+    activate P
+    P --> C : Confirmation de paiement
+    deactivate P
+    
+    C -> DB : Enregistrer transaction & MAJ stock
+    C --> I : Paiement réussi
+    I --> U : Afficher confirmation
+else Commande Rejetée
+    C --> I : Paiement refusé
+    I --> U : Afficher erreur de paiement
+end
+
+deactivate C
+deactivate I
+
+@enduml

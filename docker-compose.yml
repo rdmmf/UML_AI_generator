@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # SERVICE 1 : DEEPSEEK (Le Cerveau)
+  ai-brain:
+    image: ollama/ollama:latest
+    container_name: deepseek_engine
+    volumes:
+      - ollama_data:/root/.ollama
+    # Expose le port pour que vous puissiez tester depuis votre PC (http://localhost:11434)
+    ports:
+      - "11434:11434"
+    # Configuration GPU (Décommenter si vous avez une carte NVIDIA)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+  
+    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 5 && ollama pull deepseek-r1:1.5b && wait"]
+
+  # SERVICE 2 : VOTRE APP (L'Architecte UML)
+  app-core:
+    build: .
+    container_name: uml_app
+    # Ce lien permet à l'app d'attendre que le cerveau soit "là" avant de démarrer
+    depends_on:
+      - ai-brain
+    environment:
+      # CONFIGURATION CREWAI / OLLAMA
+      # L'adresse interne Docker est 'http://ai-brain:11434'
+      - OPENAI_API_BASE=http://ai-brain:11434/v1
+      - OPENAI_API_KEY=NA  # Pas de clé nécessaire pour Ollama
+      # Le modèle défini dans votre document est DeepSeek-R1 [cite: 6]
+      # Note: Vérifiez le nom exact du tag sur Ollama Library (ex: deepseek-coder:6.7b)
+      - OPENAI_MODEL_NAME=deepseek-coder:6.7b
+      
+      # CONFIGURATION SYSTEME
+      - PLANTUML_JAR=/tools/plantuml.jar
+    volumes:
+      # Montage des dossiers pour voir les fichiers générés sur votre PC
+      - ./inputs:/app/inputs
+      - ./outputs:/app/outputs
+      # Montage du code pour développer sans tout reconstruire
+      - ./src:/app/src
+
+volumes:
+  ollama_data:

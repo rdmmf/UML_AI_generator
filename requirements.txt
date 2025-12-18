@@ -1,0 +1,6 @@
+crewai              # Pour l'orchestration Multi-Agents [cite: 30]
+langchain_community
+pytesseract         # Pour piloter l'OCR depuis Python [cite: 17]
+pdf2image           # Conversion PDF -> Images pour l'OCR
+pillow              # Traitement d'images
+openai              # Client standard pour parler à DeepSeek (Ollama)

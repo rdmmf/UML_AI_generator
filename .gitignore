@@ -1,0 +1,49 @@
+# --- Python Standard ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- Environnement & Sécurité (CRITIQUE) ---
+# Pour ne jamais commiter vos clés d'API ou configs locales
+.env
+.env.local
+.env.*
+
+# --- Données du projet (Inputs/Outputs) ---
+# On ignore le contenu (PDFs lourds, Images générées)
+# Mais on garde la structure des dossiers grâce au !.gitkeep
+inputs/*
+!inputs/.gitkeep
+outputs/*
+!outputs/.gitkeep
+
+# --- Outils & Binaires ---
+# On ne versionne pas le JAR de PlantUML (il est téléchargé par Docker ou curl)
+tools/*.jar
+*.jar
+
+# --- Docker & Volumes ---
+# Si vous montez les volumes dans le dossier courant
+ollama_data/
+qdrant_data/
+docker-compose.override.yml
+
+# --- CrewAI / LangChain Caches ---
+# Fichiers de cache locaux ou bases de données temporaires
+.chroma/
+db/
+*.db
+*.sqlite3
+
+# --- IDE & OS ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

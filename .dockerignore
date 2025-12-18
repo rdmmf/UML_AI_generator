@@ -1,0 +1,13 @@
+# .dockerignore
+.git
+.gitignore
+venv/
+__pycache__/
+*.pyc
+.env
+docker-compose.yml
+# On ignore les dossiers de données pour ne pas les figer dans l'image
+# (On utilisera les VOLUMES pour y accéder)
+inputs/
+outputs/
+ollama_data/
