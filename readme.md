@@ -14,3 +14,9 @@ curl http://localhost:11434/v1/chat/completions -d '{
   "stream": false
 }'
 ```
+
+Pour avoir le chat avec r1:
+
+```bash
+docker exec -it uml_app python app.py
+```
