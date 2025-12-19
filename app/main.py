@@ -5,7 +5,6 @@ import sys
 print("--- Démarrage de l'Application UML ---")
 print("Initialisation des agents...")
 # Ici viendra votre code CrewAI plus tard
-
 # BOUCLE INFINIE : Indispensable pour que Docker ne s'arrête pas
 try:
     while True:
@@ -16,3 +15,9 @@ try:
 except KeyboardInterrupt:
     print("Arrêt de l'application.")
     sys.exit(0)
+
+
+
+
+
+
